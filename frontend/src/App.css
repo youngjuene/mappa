@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for the isochrone mapping app */
+
+/* Slider styling */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Map container styling */
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Isochrone colors */
+.isochrone-walk {
+  color: #10b981;
+}
+
+.isochrone-bike {
+  color: #f59e0b;
+}
+
+.isochrone-run {
+  color: #ef4444;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Pulse animation for loading states */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Map distortion effects */
+.map-distorted {
+  filter: hue-rotate(15deg) saturate(1.2) contrast(1.1);
+  transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map-flat {
+  filter: none;
+  transition: filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Heatmap overlay styling */
+.heatmap-overlay {
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* POI marker animations */
+.poi-marker {
+  transition: all 0.3s ease;
+}
+
+.poi-marker:hover {
+  transform: scale(1.1);
+  z-index: 1000;
+}
+
+/* Route line styling */
+.route-line {
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.route-walking {
+  stroke: #10b981;
+  stroke-dasharray: 5, 5;
+}
+
+.route-bicycling {
+  stroke: #f59e0b;
+  stroke-dasharray: none;
+}
+
+.route-running {
+  stroke: #ef4444;
+  stroke-dasharray: 10, 5;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .glass {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #000000;
+  }
+
+  .text-gray-500 {
+    color: #000000 !important;
+  }
+
+  .text-gray-600 {
+    color: #000000 !important;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Loading spinner enhancement */
+.loading-spinner {
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
