@@ -3,8 +3,6 @@ import { Toaster } from "react-hot-toast";
 import { MapContainer } from "./components/MapContainer";
 import { TimeSlider } from "./components/TimeSlider";
 import { ProfilePanel } from "./components/ProfilePanel";
-import { OnboardingTutorial } from "./components/OnboardingTutorial";
-import { useAppStore } from "./store/useAppStore";
 import "./App.css";
 
 export const App: React.FC = () => {
@@ -14,7 +12,7 @@ export const App: React.FC = () => {
     setSelectedTimeSlice,
     getTimeSlices,
   } = useAppStore();
-  const [isProfilePanelOpen] = useState(false);
+  const [isProfilePanelOpen, setIsProfilePanelOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Convert selectedTimeSlice to a value between 0 and 1 for the slider
@@ -59,6 +57,15 @@ export const App: React.FC = () => {
               </div>
             )}
 
+            <button
+              onClick={() => setIsProfilePanelOpen(!isProfilePanelOpen)}
+              className="p-2 hover:bg-gray-100 rounded-lg"
+            >
+              <span className="text-sm font-medium text-gray-700">
+                Profiles
+              </span>
+            </button>
+
             <ProfilePanel isOpen={isProfilePanelOpen} />
           </div>
         </div>
@@ -79,9 +86,6 @@ export const App: React.FC = () => {
             onPlayPause={handlePlayPause}
           />
         </div>
-
-        {/* Onboarding Tutorial */}
-        {!currentProfile && <OnboardingTutorial />}
       </main>
 
       {/* Toast Notifications */}

@@ -5,7 +5,13 @@ import path from "path";
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: [
+          ["@babel/plugin-transform-react-jsx", { runtime: "automatic" }],
+        ],
+      },
+    }),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
@@ -57,6 +63,36 @@ export default defineConfig({
       "@/types": path.resolve(__dirname, "./src/types"),
       "@/hooks": path.resolve(__dirname, "./src/hooks"),
       "@/contexts": path.resolve(__dirname, "./src/contexts"),
+    },
+  },
+  optimizeDeps: {
+    include: [
+      "react",
+      "react-dom",
+      "framer-motion",
+      "date-fns",
+      "zustand",
+      "react-hot-toast",
+      "lucide-react",
+    ],
+    esbuildOptions: {
+      target: "es2020",
+      supported: {
+        "top-level-await": true,
+      },
+    },
+  },
+  build: {
+    target: "es2020",
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom"],
+          "ui-vendor": ["framer-motion", "lucide-react"],
+          "utils-vendor": ["date-fns", "zustand", "react-hot-toast"],
+        },
+      },
     },
   },
   server: {

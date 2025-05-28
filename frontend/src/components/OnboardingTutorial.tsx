@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Clock, Users, ArrowRight } from "lucide-react";
+import { useAppStore } from "@/store/useAppStore";
+import toast from "react-hot-toast";
 
 const steps = [
   {
@@ -25,6 +27,7 @@ const steps = [
 
 export const OnboardingTutorial: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const { createProfile } = useAppStore();
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
@@ -35,6 +38,24 @@ export const OnboardingTutorial: React.FC = () => {
   const prevStep = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleGetStarted = () => {
+    try {
+      console.log("Creating default profile...");
+      createProfile({
+        name: "Default Profile",
+        travelMode: "WALKING",
+        averageSpeed: 50,
+        preferredPaths: [],
+        fitnessGoals: [],
+      });
+      console.log("Profile created successfully");
+      toast.success("Profile created! Welcome to Mappa!");
+    } catch (error) {
+      console.error("Error creating profile:", error);
+      toast.error("Failed to create profile. Please try again.");
     }
   };
 
@@ -93,7 +114,9 @@ export const OnboardingTutorial: React.FC = () => {
               </div>
 
               <button
-                onClick={nextStep}
+                onClick={
+                  currentStep === steps.length - 1 ? handleGetStarted : nextStep
+                }
                 className="flex items-center space-x-2 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
               >
                 <span>

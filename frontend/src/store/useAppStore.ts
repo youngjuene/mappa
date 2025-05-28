@@ -36,16 +36,6 @@ interface AppStore extends AppState {
   // Time controls
   getTimeSlices: () => TimeSlice[];
   setTimeSlice: (slice: TimeSlice) => void;
-
-  profiles: Array<{
-    id: string;
-    name: string;
-  }>;
-  selectedProfile: {
-    id: string;
-    name: string;
-  } | null;
-  setSelectedProfile: (profile: { id: string; name: string } | null) => void;
 }
 
 const defaultTimeSlices: TimeSlice[] = [
@@ -188,10 +178,6 @@ export const useAppStore = create<AppStore>()(
       getTimeSlices: () => defaultTimeSlices,
 
       setTimeSlice: (slice) => set({ selectedTimeSlice: slice }),
-
-      profiles: [],
-      selectedProfile: null,
-      setSelectedProfile: (profile) => set({ selectedProfile: profile }),
     }),
     {
       name: "mappa-app-store",
